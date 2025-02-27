@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAI Assistant - AI-Powered Medical Image Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen">
+    <nav class="glass-nav fixed w-full z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-blue-600">MedAI Assistant</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-32 pb-20 px-4">
+            <div class="container mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+                    AI-Powered Medical<br>Image Analysis
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Advanced diagnostics at your fingertips
+                </p>
+                <button class="start-chat-btn">Start Analysis</button>
+            </div>
+        </section>
+
+        <!-- Chat Interface -->
+        <div id="chat-container" class="glass-morphism hidden">
+            <div id="chat-header" class="p-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800">Medical Analysis Chat</h2>
+            </div>
+            <div id="chat-messages" class="p-4 space-y-4 overflow-y-auto"></div>
+            <div id="upload-area" class="p-4 border-2 border-dashed border-blue-300 rounded-lg text-center">
+                <p>Drag & Drop medical images here or click to upload</p>
+                <input type="file" id="file-input" class="hidden" accept="image/*">
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white/50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Instant Analysis</h3>
+                        <p>Get real-time analysis of medical images with high accuracy</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Secure Processing</h3>
+                        <p>Your medical data is processed with the highest security standards</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Detailed Reports</h3>
+                        <p>Comprehensive analysis reports with visualizations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 MedAI Assistant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
