@@ -144,6 +144,62 @@
                 left: -2.5rem !important;
             }
         }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3B82F6, #8B5CF6);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 0;
+            width: 100%;
+        }
+
+        .timeline-marker {
+            flex: 0 0 auto;
+            width: 16px;
+            height: 16px;
+            background: #3B82F6;
+            border-radius: 50%;
+            margin: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 0 0 40%;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 2rem;
+            }
+
+            .timeline-item {
+                justify-content: flex-start;
+                padding-left: 2rem;
+            }
+
+            .timeline-content {
+                flex: 1;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
@@ -166,36 +222,78 @@
             <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12 rise-up delay-100">Revolutionizing medical imaging analysis through advanced artificial intelligence and machine learning technologies.</p>
         </section>
 
-        <!-- Stats Section -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            <div class="stat-card rise-up delay-200">
-                <div class="text-4xl font-bold text-blue-400 mb-4">91%</div>
-                <div class="text-xl font-semibold mb-2">Accuracy Rate</div>
-                <p class="text-gray-400">In medical image analysis</p>
-            </div>
-            <div class="stat-card rise-up delay-300">
-                <div class="text-4xl font-bold text-purple-400 mb-4">1000s+</div>
-                <div class="text-xl font-semibold mb-2">Images Trained</div>
-                <p class="text-gray-400">And growing steadily</p>
-            </div>
-            <div class="stat-card rise-up delay-400">
-                <div class="text-4xl font-bold text-indigo-400 mb-4">24/7</div>
-                <div class="text-xl font-semibold mb-2">Support</div>
-                <p class="text-gray-400">Always here to help</p>
+        <!-- Mission Section -->
+        <section class="py-20 text-center">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-8 rise-up">Our Mission</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12 rise-up delay-100">
+                    Empowering healthcare professionals with advanced AI technology to enhance diagnostic accuracy and improve patient outcomes through precise medical image analysis.
+                </p>
             </div>
         </section>
 
-        <!-- Mission Section -->
-        <section class="mb-20">
-            <h2 class="text-3xl font-bold mb-8 text-center">Our Mission</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="rise-up delay-200">
-                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Empowering Healthcare</h3>
-                    <p class="text-gray-300 mb-6">Our mission is to revolutionize medical imaging analysis by providing healthcare professionals with cutting-edge AI tools that enhance accuracy, speed, and reliability in diagnosis.</p>
-                    <p class="text-gray-300">We believe in making advanced medical technology accessible to healthcare providers worldwide, improving patient outcomes through innovation.</p>
+        <!-- Platform Usage Roadmap -->
+        <section class="py-20 bg-gray-800/50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12 rise-up">How to Use Our Platform</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="timeline">
+                        <div class="timeline-item rise-up delay-200">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-2xl font-semibold text-blue-400 mb-4">1. Upload Your Image</h3>
+                                <p class="text-gray-300">Select and upload your medical image in any standard format. Our system supports various types of medical imaging.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item rise-up delay-300">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-2xl font-semibold text-blue-400 mb-4">2. AI Analysis</h3>
+                                <p class="text-gray-300">Our advanced AI system analyzes the image, detecting minute abnormalities and patterns with 91% accuracy.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item rise-up delay-400">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-2xl font-semibold text-blue-400 mb-4">3. Review Results</h3>
+                                <p class="text-gray-300">Receive detailed analysis with highlighted areas of interest and potential anomalies detected.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item rise-up delay-500">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h3 class="text-2xl font-semibold text-blue-400 mb-4">4. Interactive Consultation</h3>
+                                <p class="text-gray-300">Use our chat interface to ask questions and get detailed insights about the analysis results.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="rise-up delay-300">
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHo1Y3BnNnN0MWNxbWxqbmNyeGJkOGN2NTNyZnJ1ZmJxaWJqcWx6ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Medical Technology" class="rounded-lg shadow-2xl">
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12 rise-up">Platform Statistics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card rise-up delay-200">
+                        <div class="text-4xl font-bold text-blue-400 mb-4">91%</div>
+                        <div class="text-xl font-semibold mb-2">Accuracy Rate</div>
+                        <p class="text-gray-400">In medical image analysis</p>
+                    </div>
+                    <div class="stat-card rise-up delay-300">
+                        <div class="text-4xl font-bold text-purple-400 mb-4">1000s+</div>
+                        <div class="text-xl font-semibold mb-2">Images Trained</div>
+                        <p class="text-gray-400">And growing steadily</p>
+                    </div>
+                    <div class="stat-card rise-up delay-400">
+                        <div class="text-4xl font-bold text-indigo-400 mb-4">24/7</div>
+                        <div class="text-xl font-semibold mb-2">Availability</div>
+                        <p class="text-gray-400">Round-the-clock support</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -221,31 +319,6 @@
                         <h3 class="text-xl font-semibold mb-2">2025</h3>
                         <p class="text-gray-300">Integration of advanced machine learning models and real-time processing</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team Section -->
-        <section>
-            <h2 class="text-3xl font-bold mb-12 text-center">Our Team</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="team-member text-center rise-up delay-200">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-6 flex items-center justify-center text-3xl">👨‍⚕️</div>
-                    <h3 class="text-xl font-semibold mb-2">Dr. Sarah Chen</h3>
-                    <p class="text-gray-400 mb-4">Chief Medical Officer</p>
-                    <p class="text-gray-300">Expert in medical imaging and AI integration</p>
-                </div>
-                <div class="team-member text-center rise-up delay-300">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 mx-auto mb-6 flex items-center justify-center text-3xl">👨‍💻</div>
-                    <h3 class="text-xl font-semibold mb-2">Alex Martinez</h3>
-                    <p class="text-gray-400 mb-4">Lead AI Engineer</p>
-                    <p class="text-gray-300">Specialist in machine learning and neural networks</p>
-                </div>
-                <div class="team-member text-center rise-up delay-400">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-pink-400 to-red-500 mx-auto mb-6 flex items-center justify-center text-3xl">👩‍💼</div>
-                    <h3 class="text-xl font-semibold mb-2">Emily Watson</h3>
-                    <p class="text-gray-400 mb-4">Product Director</p>
-                    <p class="text-gray-300">Driving innovation in healthcare technology</p>
                 </div>
             </div>
         </section>
