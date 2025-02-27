@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Element References
     const menuTrigger = document.getElementById('menu-trigger');
     const scanTypeDropdown = document.getElementById('scan-type-dropdown');
-    const scanTypeSelect = document.getElementById('scan-type');
+    const scanOptions = document.querySelectorAll('.scan-option');
     const chatMessages = document.getElementById('chat-messages');
     const messageInput = document.getElementById('message-input');
     const fileInput = document.getElementById('file-input');
@@ -18,32 +18,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentAnalysis = null;
     let currentImage = null;
+    let isMenuOpen = false;
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.scan-type-container')) {
+    // Position the dropdown relative to the trigger button
+    function positionDropdown() {
+        const triggerRect = menuTrigger.getBoundingClientRect();
+        const dropdownRect = scanTypeDropdown.getBoundingClientRect();
+        
+        // Calculate available space below and above
+        const spaceBelow = window.innerHeight - triggerRect.bottom;
+        const spaceAbove = triggerRect.top;
+        
+        // Position the dropdown
+        if (spaceBelow >= dropdownRect.height || spaceBelow >= spaceAbove) {
+            // Position below
+            scanTypeDropdown.style.top = '100%';
+            scanTypeDropdown.style.bottom = 'auto';
+        } else {
+            // Position above
+            scanTypeDropdown.style.bottom = '100%';
+            scanTypeDropdown.style.top = 'auto';
+        }
+    }
+
+    // Toggle menu on burger click
+    menuTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isMenuOpen = !isMenuOpen;
+        
+        if (isMenuOpen) {
+            scanTypeDropdown.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                positionDropdown();
+                scanTypeDropdown.classList.add('show');
+            });
+        } else {
+            scanTypeDropdown.classList.remove('show');
             scanTypeDropdown.classList.add('hidden');
         }
     });
 
-    // Prevent dropdown from closing when selecting options
-    scanTypeDropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.scan-type-container') && isMenuOpen) {
+            isMenuOpen = false;
+            scanTypeDropdown.classList.remove('show');
+            scanTypeDropdown.classList.add('hidden');
+        }
     });
 
-    // Handle scan type selection
-    scanTypeSelect.addEventListener('change', (e) => {
-        const selectedType = e.target.value;
-        const selectedText = e.target.options[e.target.selectedIndex].text;
-        
-        currentScanType.textContent = selectedText;
-        addMessage(`Scan type set to: ${selectedText}`, 'system');
-        updateImageRequirements(selectedType);
-        
-        // Hide dropdown after selection
-        setTimeout(() => {
-            scanTypeDropdown.classList.add('hidden');
-        }, 300);
+    // Handle scan option selection
+    scanOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            const selectedValue = e.target.dataset.value;
+            const selectedText = e.target.textContent;
+
+            // Remove active class from all options
+            scanOptions.forEach(opt => opt.classList.remove('active'));
+            // Add active class to selected option
+            e.target.classList.add('active');
+
+            // Update current scan type display
+            currentScanType.textContent = selectedText;
+            
+            // Show requirements for selected scan type
+            updateImageRequirements(selectedValue);
+            
+            // Add message to chat
+            addMessage(`Scan type set to: ${selectedText}`, 'system');
+
+            // Close menu after selection
+            setTimeout(() => {
+                isMenuOpen = false;
+                scanTypeDropdown.classList.remove('show');
+                scanTypeDropdown.classList.add('hidden');
+            }, 300);
+        });
+    });
+
+    // Update dropdown position on window resize
+    window.addEventListener('resize', () => {
+        if (isMenuOpen) {
+            positionDropdown();
+        }
     });
 
     // New Chat Button Handler
@@ -53,9 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Upload Trigger Handler
     uploadTrigger.addEventListener('click', () => {
-        if (!scanTypeSelect.value) {
+        const selectedValue = scanOptions.find(option => option.classList.contains('active'))?.dataset.value;
+        if (!selectedValue) {
             addMessage('Please select a scan type before uploading an image.', 'system');
-            scanTypeSelect.focus();
             return;
         }
         fileInput.click();
@@ -94,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function handleFileSelection(file) {
-        if (!scanTypeSelect.value) {
+        const selectedValue = scanOptions.find(option => option.classList.contains('active'))?.dataset.value;
+        if (!selectedValue) {
             addMessage('Please select a scan type before uploading an image.', 'system');
             return;
         }
@@ -119,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateImageProperties(file);
         
         // Add to chat
-        addMessage(`Uploaded ${file.name} for ${scanTypeSelect.options[scanTypeSelect.selectedIndex].text} analysis`, 'user');
+        addMessage(`Uploaded ${file.name} for ${scanOptions.find(option => option.classList.contains('active'))?.textContent} analysis`, 'user');
         
         // Start analysis
         startAnalysis(file);
@@ -197,8 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function completeAnalysis() {
-        const scanType = scanTypeSelect.value;
-        const analysis = generateAnalysisResult(scanType);
+        const selectedValue = scanOptions.find(option => option.classList.contains('active'))?.dataset.value;
+        const analysis = generateAnalysisResult(selectedValue);
         
         currentAnalysis = analysis;
         
@@ -331,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentImage = null;
         imagePreview.classList.add('hidden');
         imageProperties.innerHTML = '<p>No image uploaded</p>';
-        scanTypeSelect.selectedIndex = 0;
+        scanOptions.forEach(option => option.classList.remove('active'));
         currentScanType.textContent = 'Not selected';
         const progressBar = analysisProgress.querySelector('.bg-blue-600');
         progressBar.style.width = '0%';
