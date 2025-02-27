@@ -6,10 +6,50 @@
     <title>Medical AI Assistant</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-[#1E1E1E] text-gray-200">
-    <div class="flex h-screen">
+<body class="bg-gradient-to-br from-gray-900 to-black text-gray-200">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-opacity-90 bg-gray-900 backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    <span class="text-xl font-bold text-white">MedAI Assistant</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Features</a>
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 z-0"></div>
+        <div class="container mx-auto px-6 py-24 relative z-10">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Advanced Medical Analysis<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Powered by AI</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Experience the future of healthcare with our state-of-the-art AI medical assistant. Get instant analysis and insights for better healthcare decisions.
+                </p>
+                <button class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg transform transition-all hover:scale-105 shadow-lg">
+                    Start Analysis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Application -->
+    <div class="flex min-h-screen">
         <!-- Left Sidebar -->
         <div class="w-64 bg-[#252526] border-r border-gray-700 flex flex-col">
             <div class="p-4 border-b border-gray-700">
