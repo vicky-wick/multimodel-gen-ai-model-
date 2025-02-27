@@ -194,11 +194,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Position below
             scanTypeDropdown.style.top = '100%';
             scanTypeDropdown.style.bottom = 'auto';
+            scanTypeDropdown.style.maxHeight = `${Math.min(400, spaceBelow - 20)}px`;
         } else {
             // Position above
             scanTypeDropdown.style.bottom = '100%';
             scanTypeDropdown.style.top = 'auto';
+            scanTypeDropdown.style.maxHeight = `${Math.min(400, spaceAbove - 20)}px`;
         }
+
+        // Center horizontally in the middle column
+        const mainColumn = document.querySelector('.flex-1.flex.flex-col');
+        const mainColumnRect = mainColumn.getBoundingClientRect();
+        scanTypeDropdown.style.width = `${mainColumnRect.width - 32}px`; // 32px for padding
+        scanTypeDropdown.style.left = '16px'; // 16px padding from left
     }
 
     // Toggle menu on burger click
@@ -218,12 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.scan-type-container') && isMenuOpen) {
-            isMenuOpen = false;
-            scanTypeDropdown.classList.remove('show');
-            scanTypeDropdown.classList.add('hidden');
+    // Update dropdown position on window resize
+    window.addEventListener('resize', () => {
+        if (isMenuOpen) {
+            positionDropdown();
         }
     });
 
@@ -254,13 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 scanTypeDropdown.classList.add('hidden');
             }, 300);
         });
-    });
-
-    // Update dropdown position on window resize
-    window.addEventListener('resize', () => {
-        if (isMenuOpen) {
-            positionDropdown();
-        }
     });
 
     // New Chat Button Handler
