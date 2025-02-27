@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Medical AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3B82F6, #8B5CF6);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .timeline-content {
+            width: calc(50% - 2rem);
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-radius: 50%;
+            top: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -10px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -10px;
+            transform: translateY(-50%);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #3B82F6, #8B5CF6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #3B82F6;
+        }
+
+        .nav-link.active::after {
+            transform: scaleX(1);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .timeline-content {
+                width: calc(100% - 3rem);
+                margin-left: 3rem !important;
+            }
+
+            .timeline-content::before {
+                left: -2.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Medical AI Assistant</a>
+            <div class="space-x-6">
+                <a href="index.html" class="nav-link hover:text-blue-400 transition-colors">Home</a>
+                <a href="features.html" class="nav-link hover:text-blue-400 transition-colors">Features</a>
+                <a href="about.html" class="nav-link active text-blue-400">About</a>
+                <a href="assistant.html" class="nav-link hover:text-blue-400 transition-colors">Assistant</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <section class="text-center mb-20">
+            <h1 class="text-5xl font-bold mb-6 rise-up">About Our Mission</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12 rise-up delay-100">Revolutionizing medical imaging analysis through advanced artificial intelligence and machine learning technologies.</p>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="stat-card rise-up delay-200">
+                <div class="text-4xl font-bold text-blue-400 mb-4">99.9%</div>
+                <div class="text-xl font-semibold mb-2">Accuracy Rate</div>
+                <p class="text-gray-400">In medical image analysis</p>
+            </div>
+            <div class="stat-card rise-up delay-300">
+                <div class="text-4xl font-bold text-purple-400 mb-4">1M+</div>
+                <div class="text-xl font-semibold mb-2">Images Processed</div>
+                <p class="text-gray-400">And growing daily</p>
+            </div>
+            <div class="stat-card rise-up delay-400">
+                <div class="text-4xl font-bold text-indigo-400 mb-4">24/7</div>
+                <div class="text-xl font-semibold mb-2">Support</div>
+                <p class="text-gray-400">Always here to help</p>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 text-center">Our Mission</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="rise-up delay-200">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Empowering Healthcare</h3>
+                    <p class="text-gray-300 mb-6">Our mission is to revolutionize medical imaging analysis by providing healthcare professionals with cutting-edge AI tools that enhance accuracy, speed, and reliability in diagnosis.</p>
+                    <p class="text-gray-300">We believe in making advanced medical technology accessible to healthcare providers worldwide, improving patient outcomes through innovation.</p>
+                </div>
+                <div class="rise-up delay-300">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHo1Y3BnNnN0MWNxbWxqbmNyeGJkOGN2NTNyZnJ1ZmJxaWJqcWx6ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Medical Technology" class="rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold mb-12 text-center">Our Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content rise-up">
+                        <h3 class="text-xl font-semibold mb-2">2023</h3>
+                        <p class="text-gray-300">Launch of Medical AI Assistant with breakthrough accuracy in image analysis</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content rise-up delay-100">
+                        <h3 class="text-xl font-semibold mb-2">2024</h3>
+                        <p class="text-gray-300">Expanded support for multiple imaging modalities and enhanced AI capabilities</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content rise-up delay-200">
+                        <h3 class="text-xl font-semibold mb-2">2025</h3>
+                        <p class="text-gray-300">Integration of advanced machine learning models and real-time processing</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section>
+            <h2 class="text-3xl font-bold mb-12 text-center">Our Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="team-member text-center rise-up delay-200">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-6 flex items-center justify-center text-3xl">👨‍⚕️</div>
+                    <h3 class="text-xl font-semibold mb-2">Dr. Sarah Chen</h3>
+                    <p class="text-gray-400 mb-4">Chief Medical Officer</p>
+                    <p class="text-gray-300">Expert in medical imaging and AI integration</p>
+                </div>
+                <div class="team-member text-center rise-up delay-300">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 mx-auto mb-6 flex items-center justify-center text-3xl">👨‍💻</div>
+                    <h3 class="text-xl font-semibold mb-2">Alex Martinez</h3>
+                    <p class="text-gray-400 mb-4">Lead AI Engineer</p>
+                    <p class="text-gray-300">Specialist in machine learning and neural networks</p>
+                </div>
+                <div class="team-member text-center rise-up delay-400">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-r from-pink-400 to-red-500 mx-auto mb-6 flex items-center justify-center text-3xl">👩‍💼</div>
+                    <h3 class="text-xl font-semibold mb-2">Emily Watson</h3>
+                    <p class="text-gray-400 mb-4">Product Director</p>
+                    <p class="text-gray-300">Driving innovation in healthcare technology</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-12 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Medical AI Assistant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.rise-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
