@@ -215,21 +215,39 @@ document.addEventListener('DOMContentLoaded', () => {
         isMenuOpen = !isMenuOpen;
         
         if (isMenuOpen) {
+            menuTrigger.classList.add('active');
             scanTypeDropdown.classList.remove('hidden');
             requestAnimationFrame(() => {
                 positionDropdown();
                 scanTypeDropdown.classList.add('show');
             });
         } else {
+            menuTrigger.classList.remove('active');
             scanTypeDropdown.classList.remove('show');
             scanTypeDropdown.classList.add('hidden');
         }
     });
 
-    // Update dropdown position on window resize
-    window.addEventListener('resize', () => {
-        if (isMenuOpen) {
-            positionDropdown();
+    // Add hover effect for menu trigger
+    menuTrigger.addEventListener('mouseenter', () => {
+        if (!isMenuOpen) {
+            menuTrigger.style.transform = 'translateY(-2px)';
+        }
+    });
+
+    menuTrigger.addEventListener('mouseleave', () => {
+        if (!isMenuOpen) {
+            menuTrigger.style.transform = 'translateY(0)';
+        }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.scan-type-container') && isMenuOpen) {
+            isMenuOpen = false;
+            menuTrigger.classList.remove('active');
+            scanTypeDropdown.classList.remove('show');
+            scanTypeDropdown.classList.add('hidden');
         }
     });
 
@@ -256,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Close menu after selection
             setTimeout(() => {
                 isMenuOpen = false;
+                menuTrigger.classList.remove('active');
                 scanTypeDropdown.classList.remove('show');
                 scanTypeDropdown.classList.add('hidden');
             }, 300);
