@@ -223,7 +223,7 @@
         </section>
 
         <!-- Mission Section -->
-        <section class="py-20 text-center">
+        <section class="py-20 text-center bg-gray-800/50">
             <div class="container mx-auto px-4">
                 <h2 class="text-4xl font-bold mb-8 rise-up">Our Mission</h2>
                 <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12 rise-up delay-100">
@@ -232,10 +232,34 @@
             </div>
         </section>
 
+        <!-- Stats Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12 rise-up">Platform Statistics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card rise-up delay-200">
+                        <div class="text-4xl font-bold text-blue-400 mb-4">91%</div>
+                        <div class="text-xl font-semibold mb-2">Accuracy Rate</div>
+                        <p class="text-gray-400">In medical image analysis</p>
+                    </div>
+                    <div class="stat-card rise-up delay-300">
+                        <div class="text-4xl font-bold text-purple-400 mb-4">1000s+</div>
+                        <div class="text-xl font-semibold mb-2">Images Trained</div>
+                        <p class="text-gray-400">And growing steadily</p>
+                    </div>
+                    <div class="stat-card rise-up delay-400">
+                        <div class="text-4xl font-bold text-indigo-400 mb-4">24/7</div>
+                        <div class="text-xl font-semibold mb-2">Availability</div>
+                        <p class="text-gray-400">Round-the-clock support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Platform Usage Roadmap -->
         <section class="py-20 bg-gray-800/50">
             <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 rise-up">How to Use Our Platform</h2>
+                <h2 class="text-4xl font-bold text-center mb-16 rise-up">How to Use Our Platform</h2>
                 <div class="max-w-4xl mx-auto">
                     <div class="timeline">
                         <div class="timeline-item rise-up delay-200">
@@ -274,54 +298,83 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
-        <section class="py-20">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12 rise-up">Platform Statistics</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="stat-card rise-up delay-200">
-                        <div class="text-4xl font-bold text-blue-400 mb-4">91%</div>
-                        <div class="text-xl font-semibold mb-2">Accuracy Rate</div>
-                        <p class="text-gray-400">In medical image analysis</p>
-                    </div>
-                    <div class="stat-card rise-up delay-300">
-                        <div class="text-4xl font-bold text-purple-400 mb-4">1000s+</div>
-                        <div class="text-xl font-semibold mb-2">Images Trained</div>
-                        <p class="text-gray-400">And growing steadily</p>
-                    </div>
-                    <div class="stat-card rise-up delay-400">
-                        <div class="text-4xl font-bold text-indigo-400 mb-4">24/7</div>
-                        <div class="text-xl font-semibold mb-2">Availability</div>
-                        <p class="text-gray-400">Round-the-clock support</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <style>
+            .timeline {
+                position: relative;
+                padding: 2rem 0;
+            }
 
-        <!-- Timeline Section -->
-        <section class="mb-20">
-            <h2 class="text-3xl font-bold mb-12 text-center">Our Journey</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content rise-up">
-                        <h3 class="text-xl font-semibold mb-2">2023</h3>
-                        <p class="text-gray-300">Launch of Medical AI Assistant with breakthrough accuracy in image analysis</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content rise-up delay-100">
-                        <h3 class="text-xl font-semibold mb-2">2024</h3>
-                        <p class="text-gray-300">Expanded support for multiple imaging modalities and enhanced AI capabilities</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content rise-up delay-200">
-                        <h3 class="text-xl font-semibold mb-2">2025</h3>
-                        <p class="text-gray-300">Integration of advanced machine learning models and real-time processing</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 100%;
+                background: linear-gradient(to bottom, #3B82F6, #8B5CF6);
+            }
+
+            .timeline-item {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 2rem 0;
+                width: 100%;
+            }
+
+            .timeline-marker {
+                flex: 0 0 auto;
+                width: 16px;
+                height: 16px;
+                background: #3B82F6;
+                border-radius: 50%;
+                margin: 0 2rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            .timeline-content {
+                flex: 0 0 40%;
+                padding: 2rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            @media (max-width: 768px) {
+                .timeline::before {
+                    left: 2rem;
+                }
+
+                .timeline-item {
+                    justify-content: flex-start;
+                    padding-left: 2rem;
+                }
+
+                .timeline-content {
+                    flex: 1;
+                    margin-left: 2rem;
+                }
+
+                .timeline-marker {
+                    margin: 0;
+                }
+            }
+
+            .stat-card {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 1rem;
+                padding: 2rem;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+        </style>
     </main>
 
     <footer class="bg-gray-800 text-gray-400 py-12 mt-20">
