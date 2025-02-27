@@ -21,6 +21,60 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentImage = null;
     let isMenuOpen = false;
 
+    // Initialize with welcome message
+    function showWelcomeMessage() {
+        const welcomeDiv = document.createElement('div');
+        welcomeDiv.className = 'assistant-message';
+        welcomeDiv.innerHTML = `
+            <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="flex-1 space-y-3">
+                    <p>Welcome to Medical AI Assistant! Let's analyze your medical images.</p>
+                    <p class="text-gray-400">Please select the type of scan from the dropdown menu above to begin.</p>
+                </div>
+            </div>
+        `;
+        chatMessages.appendChild(welcomeDiv);
+    }
+
+    // Show welcome message on load
+    showWelcomeMessage();
+
+    // Chat Message Handler
+    function addMessage(content, type = 'user') {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = type === 'user' ? 'user-message' : 'assistant-message';
+        
+        let avatarIcon;
+        if (type === 'assistant') {
+            avatarIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+        } else if (type === 'system') {
+            avatarIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+        } else {
+            avatarIcon = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>';
+        }
+
+        messageDiv.innerHTML = `
+            <div class="flex items-start gap-4">
+                <div class="w-8 h-8 rounded-full ${type === 'assistant' ? 'bg-blue-600' : type === 'system' ? 'bg-purple-600' : 'bg-green-600'} flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        ${avatarIcon}
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    ${content}
+                </div>
+            </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
     // File Upload Handlers
     function handleFile(file) {
         if (!file.type.startsWith('image/')) {
@@ -125,15 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
         imageProperties.innerHTML = '<p>No image uploaded</p>';
         addMessage('Image removed', 'system');
     });
-
-    // Chat Message Handler
-    function addMessage(content, type = 'user') {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = type === 'user' ? 'user-message' : 'assistant-message';
-        messageDiv.textContent = content;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
 
     // Position the dropdown relative to the trigger button
     function positionDropdown() {
@@ -419,14 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = '0%';
         
         // Add welcome message
-        addMessage(`
-            <div class="space-y-3">
-                <p>Welcome to Medical AI Assistant! Let's analyze your medical images.</p>
-                <p class="text-gray-400">Please select the type of scan from the dropdown menu above to begin.</p>
-            </div>
-        `, 'assistant');
+        showWelcomeMessage();
     }
 
     // Initialize chat
-    resetChat();
+    // resetChat();
 });
