@@ -16,11 +16,74 @@
     background: #4D4D4D;
 }
 
-/* Base styles */
+/* Modern Glass-morphism Background */
 body {
-    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1a1c2e 0%, #161923 100%);
     min-height: 100vh;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+}
+
+/* Animated Background Elements */
+.bg-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bg-element {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 20s infinite;
+}
+
+.bg-element:nth-child(1) {
+    background: #3b82f6;
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    left: -100px;
+    animation-delay: -2s;
+}
+
+.bg-element:nth-child(2) {
+    background: #60a5fa;
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    right: -50px;
+    animation-delay: -4s;
+}
+
+.bg-element:nth-child(3) {
+    background: #2563eb;
+    width: 350px;
+    height: 350px;
+    bottom: -100px;
+    left: 30%;
+    animation-delay: -6s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(50px, 50px) scale(1.1);
+    }
+    50% {
+        transform: translate(0, 100px) scale(1);
+    }
+    75% {
+        transform: translate(-50px, 50px) scale(0.9);
+    }
 }
 
 /* Navigation Styles */
@@ -439,6 +502,132 @@ button:active {
     border-color: #3B82F6;
     background: rgba(59, 130, 246, 0.15);
     transform: scale(1.01);
+}
+
+/* Modern Container Styles */
+.container {
+    background: rgba(23, 25, 35, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+}
+
+/* Enhanced Chat Messages */
+.chat-messages {
+    background: rgba(26, 28, 35, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.message {
+    background: rgba(35, 38, 45, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.message:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated Buttons */
+.btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* Enhanced Input Fields */
+.input-field {
+    background: rgba(35, 38, 45, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    background: rgba(35, 38, 45, 0.9);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Animated Icons */
+.icon {
+    transition: all 0.3s ease;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    color: #3b82f6;
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+.loading div {
+    position: absolute;
+    background: #3b82f6;
+    opacity: 1;
+    border-radius: 50%;
+    animation: loading 1.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+@keyframes loading {
+    0% {
+        top: 28px;
+        left: 28px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        top: -1px;
+        left: -1px;
+        width: 58px;
+        height: 58px;
+        opacity: 0;
+    }
 }
 
 /* Notebook Style Code Blocks */
