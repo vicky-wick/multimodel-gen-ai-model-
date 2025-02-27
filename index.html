@@ -4,90 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical AI Assistant</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-black text-gray-200">
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation" style="background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnVtcjhtcjZuYXJmdXAzcTNjeWVlOTV1cGV0dHUzcTZwOTA0bWt3cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2JHYDHEqkHmS75QI/giphy.gif');"></div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-opacity-90 bg-gray-900 backdrop-blur-md z-50 border-b border-gray-800">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <svg class="w-8 h-8 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                    </svg>
-                    <span class="text-xl font-bold text-white">MedAI Assistant</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Features</a>
-                    <a href="#" class="nav-link">About</a>
-                    <a href="#" class="nav-link">Contact</a>
-                </div>
+    <nav class="nav-container">
+        <div class="nav-content container">
+            <div class="logo">Medical AI Assistant</div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="assistant.html" class="nav-link highlight">Start Analysis</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 z-0"></div>
-        <div class="container mx-auto px-6 py-24 relative z-10">
-            <div class="text-center mb-16">
-                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                    Advanced Medical Analysis<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Powered by AI</span>
-                </h1>
-                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                    Experience the future of healthcare with our state-of-the-art AI medical assistant. Get instant analysis and insights for better healthcare decisions.
-                </p>
-                <a href="assistant.html" class="inline-block bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold px-8 py-3 rounded-lg transform transition-all hover:scale-105 shadow-lg">
-                    Start Analysis
-                </a>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Advanced Medical Image Analysis</h1>
+                    <p class="hero-subtitle">Powered by AI for accurate and rapid diagnostics</p>
+                    <a href="assistant.html" class="cta-button">Start Analysis</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="py-20 bg-gray-900/50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center text-white mb-12">Key Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="glass-card rounded-xl p-6">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
+        <!-- Features Section -->
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Our Capabilities</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-image">
+                            <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczBzczc5Y2xjYnRuNGdtYngwYmE0bGJweWUxbmRwempiOW8zbDc5YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QtW0qjBHLGH9C/giphy.gif" alt="Brain Scan Analysis">
+                        </div>
+                        <h3>Brain Scan Analysis</h3>
+                        <p>Advanced neural network analysis for accurate brain scan interpretation</p>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Instant Analysis</h3>
-                    <p class="text-gray-400">Get immediate insights about your medical concerns using advanced AI technology.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="glass-card rounded-xl p-6">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                        </svg>
+                    <div class="feature-card">
+                        <div class="feature-image">
+                            <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWtudDE2bWVzbWZ2d3Q4Mzc4NXI5OTlvY3FpajU0czg1aXFsZ2FxNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/U0uDoH7fApYWI/giphy.gif" alt="Chest X-Ray Analysis">
+                        </div>
+                        <h3>Chest X-Ray Analysis</h3>
+                        <p>Precise detection of abnormalities in chest radiographs</p>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Personalized Care</h3>
-                    <p class="text-gray-400">Receive tailored medical insights based on your specific symptoms and history.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="glass-card rounded-xl p-6">
-                    <div class="text-green-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
+                    <div class="feature-card">
+                        <div class="feature-image">
+                            <img src="https://media.giphy.com/media/4aCvUZWtSq1W/giphy.gif?cid=ecf05e47swqofy23q2cyu6so8gpcq7l5kuoq9xxzq8fdgvh8&ep=v1_gifs_related&rid=giphy.gif&ct=g" alt="Real-time Processing">
+                        </div>
+                        <h3>Real-time Processing</h3>
+                        <p>Instant analysis and reporting of medical imaging data</p>
                     </div>
-                    <h3 class="text-xl font-semibold text-white mb-2">Secure & Private</h3>
-                    <p class="text-gray-400">Your health information is protected with state-of-the-art security measures.</p>
                 </div>
             </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About Our Technology</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>Our AI-powered medical image analysis system provides cutting-edge diagnostics support for healthcare professionals. Using advanced machine learning algorithms, we deliver accurate and rapid analysis of various medical imaging modalities.</p>
+                        <ul class="about-features">
+                            <li>Advanced Neural Networks</li>
+                            <li>Real-time Analysis</li>
+                            <li>Multiple Imaging Modalities</li>
+                            <li>Secure Data Processing</li>
+                        </ul>
+                        <a href="assistant.html" class="secondary-cta">Try It Now</a>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <h3>99.9%</h3>
+                            <p>Accuracy Rate</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>&lt;2s</h3>
+                            <p>Processing Time</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>24/7</h3>
+                            <p>Availability</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>100+</h3>
+                            <p>Supported Formats</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Medical AI Assistant. All rights reserved.</p>
         </div>
-    </section>
+    </footer>
 
     <script src="app.js"></script>
 </body>

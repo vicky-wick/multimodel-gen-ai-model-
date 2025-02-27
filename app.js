@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentAnalysis = null;
     let currentImage = null;
-    let isMenuOpen = false;
+    let isDropdownOpen = false;
 
     // Initialize with welcome message
     function showWelcomeMessage() {
@@ -180,104 +180,48 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage('Image removed', 'system');
     });
 
-    // Position the dropdown relative to the trigger button
-    function positionDropdown() {
-        const triggerRect = menuTrigger.getBoundingClientRect();
-        const dropdownRect = scanTypeDropdown.getBoundingClientRect();
-        
-        // Calculate available space below and above
-        const spaceBelow = window.innerHeight - triggerRect.bottom;
-        const spaceAbove = triggerRect.top;
-        
-        // Position the dropdown
-        if (spaceBelow >= dropdownRect.height || spaceBelow >= spaceAbove) {
-            // Position below
-            scanTypeDropdown.style.top = '100%';
-            scanTypeDropdown.style.bottom = 'auto';
-            scanTypeDropdown.style.maxHeight = `${Math.min(400, spaceBelow - 20)}px`;
-        } else {
-            // Position above
-            scanTypeDropdown.style.bottom = '100%';
-            scanTypeDropdown.style.top = 'auto';
-            scanTypeDropdown.style.maxHeight = `${Math.min(400, spaceAbove - 20)}px`;
-        }
-
-        // Center horizontally in the middle column
-        const mainColumn = document.querySelector('.flex-1.flex.flex-col');
-        const mainColumnRect = mainColumn.getBoundingClientRect();
-        scanTypeDropdown.style.width = `${mainColumnRect.width - 32}px`; // 32px for padding
-        scanTypeDropdown.style.left = '16px'; // 16px padding from left
-    }
-
-    // Toggle menu on burger click
+    // Scan Type Dropdown Functionality
     menuTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
-        isMenuOpen = !isMenuOpen;
-        
-        if (isMenuOpen) {
-            menuTrigger.classList.add('active');
-            scanTypeDropdown.classList.remove('hidden');
-            requestAnimationFrame(() => {
-                positionDropdown();
-                scanTypeDropdown.classList.add('show');
-            });
-        } else {
-            menuTrigger.classList.remove('active');
-            scanTypeDropdown.classList.remove('show');
-            scanTypeDropdown.classList.add('hidden');
-        }
+        isDropdownOpen = !isDropdownOpen;
+        scanTypeDropdown.style.display = isDropdownOpen ? 'block' : 'none';
+        scanTypeDropdown.classList.toggle('show');
     });
 
-    // Add hover effect for menu trigger
-    menuTrigger.addEventListener('mouseenter', () => {
-        if (!isMenuOpen) {
-            menuTrigger.style.transform = 'translateY(-2px)';
-        }
-    });
-
-    menuTrigger.addEventListener('mouseleave', () => {
-        if (!isMenuOpen) {
-            menuTrigger.style.transform = 'translateY(0)';
-        }
-    });
-
-    // Close menu when clicking outside
+    // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.scan-type-container') && isMenuOpen) {
-            isMenuOpen = false;
-            menuTrigger.classList.remove('active');
+        if (isDropdownOpen && !scanTypeDropdown.contains(e.target) && e.target !== menuTrigger) {
+            isDropdownOpen = false;
+            scanTypeDropdown.style.display = 'none';
             scanTypeDropdown.classList.remove('show');
-            scanTypeDropdown.classList.add('hidden');
         }
     });
 
-    // Handle scan option selection
+    // Handle scan type selection
     scanOptions.forEach(option => {
         option.addEventListener('click', (e) => {
-            const selectedValue = e.target.dataset.value;
-            const selectedText = e.target.textContent;
-
+            e.preventDefault();
+            const value = option.getAttribute('data-value');
+            const title = option.querySelector('.scan-option-title').textContent;
+            
+            // Update current selection
+            currentScanType.textContent = title;
+            
             // Remove active class from all options
-            scanOptions.forEach(opt => opt.classList.remove('active'));
+            scanOptions.forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
             // Add active class to selected option
-            e.target.classList.add('active');
-
-            // Update current scan type display
-            currentScanType.textContent = selectedText;
+            option.classList.add('active');
             
-            // Show requirements for selected scan type
-            updateImageRequirements(selectedValue);
+            // Close dropdown
+            isDropdownOpen = false;
+            scanTypeDropdown.style.display = 'none';
+            scanTypeDropdown.classList.remove('show');
             
-            // Add message to chat
-            addMessage(`Scan type set to: ${selectedText}`, 'system');
-
-            // Close menu after selection
-            setTimeout(() => {
-                isMenuOpen = false;
-                menuTrigger.classList.remove('active');
-                scanTypeDropdown.classList.remove('show');
-                scanTypeDropdown.classList.add('hidden');
-            }, 300);
+            // You can handle the selected scan type here
+            console.log('Selected scan type:', value);
         });
     });
 
@@ -485,6 +429,46 @@ document.addEventListener('DOMContentLoaded', () => {
         showWelcomeMessage();
     }
 
-    // Initialize chat
-    // resetChat();
+    // Scroll Reveal Animation
+    function reveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        
+        reveals.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('active');
+            }
+        });
+    }
+
+    // Add reveal class to elements
+    const elements = [
+        ...document.querySelectorAll('.feature-card'),
+        ...document.querySelectorAll('.stat-card'),
+        ...document.querySelectorAll('.about-text'),
+        document.querySelector('.hero-content')
+    ];
+    
+    elements.forEach(element => {
+        if (element) {
+            element.classList.add('reveal');
+        }
+    });
+    
+    // Initial check for elements in view
+    reveal();
+    
+    // Listen for scroll
+    window.addEventListener('scroll', reveal);
+
+    // Parallax effect for background
+    window.addEventListener('scroll', () => {
+        const background = document.querySelector('.background-animation');
+        if (background) {
+            const scrolled = window.pageYOffset;
+            background.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
 });

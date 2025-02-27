@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical AI Assistant - Analysis</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Medical AI Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#1a1c2e] min-h-screen">
+<body class="bg-[#1a1c2e]">
     <!-- Animated Background -->
     <div class="bg-elements">
         <div class="bg-element"></div>
@@ -16,170 +16,216 @@
         <div class="bg-element"></div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container min-h-screen flex">
-        <!-- Navigation -->
-        <nav class="fixed top-0 w-full bg-opacity-90 bg-gray-900 backdrop-blur-md z-50 border-b border-gray-800">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <a href="index.html" class="flex items-center">
-                            <svg class="w-8 h-8 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
-                            <span class="text-xl font-bold text-white">MedAI Assistant</span>
-                        </a>
-                    </div>
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="index.html" class="nav-link">Home</a>
-                        <a href="#" class="nav-link">Features</a>
-                        <a href="#" class="nav-link">About</a>
-                        <a href="#" class="nav-link">Contact</a>
-                    </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-opacity-90 bg-gray-900 backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    <span class="text-xl font-bold text-white">MedAI Assistant</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Features</a>
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
+    <!-- Main Content -->
+    <div class="flex h-screen pt-16">
         <!-- Left Sidebar -->
-        <div class="w-64 bg-[#1f2937] p-4 border-r border-gray-700">
-            <div class="flex items-center justify-between mb-8">
-                <h1 class="text-xl font-bold text-white">Medical AI</h1>
+        <div class="w-64 bg-[#1f2937] border-r border-gray-700 flex flex-col">
+            <div class="p-4 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-white">Analysis</h2>
                 <button id="new-chat" class="btn btn-icon">
                     <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                 </button>
             </div>
-            
-            <!-- Chat History -->
-            <div class="space-y-2">
-                <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Recent Analyses</h2>
-                <div id="chat-history" class="space-y-2">
-                    <!-- Chat history items will be added here -->
+            <div class="flex-1 overflow-y-auto p-4">
+                <div class="space-y-2">
+                    <h3 class="text-sm font-medium text-gray-400 uppercase tracking-wider">Recent</h3>
+                    <div id="chat-history" class="space-y-2">
+                        <!-- Chat history items will be added here -->
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Main Chat Area -->
-        <div class="flex-1 flex flex-col bg-[#171923]">
+        <div class="flex-1 flex flex-col bg-[#171923] overflow-hidden">
+            <!-- Scan Type Selection -->
+            <div class="scan-type-container">
+                <button id="menu-trigger" class="scan-trigger-btn">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <span class="text-gray-300">Select Scan Type</span>
+                        </div>
+                        <span id="current-scan-type" class="text-gray-400">Not selected</span>
+                    </div>
+                </button>
+                
+                <!-- Dropdown Content -->
+                <div id="scan-type-dropdown" class="hidden">
+                    <!-- Brain Scans -->
+                    <div class="scan-category">
+                        <div class="scan-category-title">Brain & Neurological</div>
+                        <button class="scan-option" data-value="brain_mri">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Brain MRI</span>
+                                <span class="scan-option-desc">Magnetic Resonance Imaging of the brain</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="brain_ct">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Brain CT</span>
+                                <span class="scan-option-desc">Computed Tomography of the brain</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="spine_mri">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Spine MRI</span>
+                                <span class="scan-option-desc">Magnetic Resonance Imaging of the spine</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <!-- Chest Scans -->
+                    <div class="scan-category">
+                        <div class="scan-category-title">Chest & Cardiac</div>
+                        <button class="scan-option" data-value="chest_xray">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Chest X-Ray</span>
+                                <span class="scan-option-desc">Standard chest radiograph</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="chest_ct">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Chest CT</span>
+                                <span class="scan-option-desc">Computed Tomography of the chest</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="cardiac_mri">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Cardiac MRI</span>
+                                <span class="scan-option-desc">Magnetic Resonance Imaging of the heart</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <!-- Abdominal Scans -->
+                    <div class="scan-category">
+                        <div class="scan-category-title">Abdominal & Pelvic</div>
+                        <button class="scan-option" data-value="abdominal_ct">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Abdominal CT</span>
+                                <span class="scan-option-desc">Computed Tomography of the abdomen</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="abdominal_mri">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Abdominal MRI</span>
+                                <span class="scan-option-desc">Magnetic Resonance Imaging of the abdomen</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="ultrasound">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">Ultrasound</span>
+                                <span class="scan-option-desc">Sonographic imaging</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <!-- Other Scans -->
+                    <div class="scan-category">
+                        <div class="scan-category-title">Other Imaging</div>
+                        <button class="scan-option" data-value="xray">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">General X-Ray</span>
+                                <span class="scan-option-desc">Standard radiographic imaging</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="mri">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">General MRI</span>
+                                <span class="scan-option-desc">General Magnetic Resonance Imaging</span>
+                            </div>
+                        </button>
+                        <button class="scan-option" data-value="ct">
+                            <div class="scan-option-content">
+                                <span class="scan-option-title">General CT</span>
+                                <span class="scan-option-desc">General Computed Tomography</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Chat Messages Area -->
-            <div class="flex-1 overflow-y-auto p-4 space-y-4" id="chat-messages">
+            <div class="flex-1 overflow-y-auto p-4" id="chat-messages">
                 <!-- Messages will be added here -->
             </div>
 
             <!-- Input Area -->
-            <div class="border-t border-gray-700 p-4 bg-[#252526]">
-                <div class="flex flex-col gap-4">
+            <div class="border-t border-gray-700 p-4">
+                <div class="space-y-4">
                     <!-- Drop Zone -->
-                    <div id="drop-zone" class="upload-area flex flex-col items-center justify-center p-6 cursor-pointer">
+                    <div id="drop-zone" class="upload-area">
                         <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                         </svg>
-                        <p class="text-gray-400 text-center mb-1">Drag and drop your image here</p>
+                        <p class="text-gray-400 text-center mb-1">Drag and drop your medical image here</p>
                         <p class="text-gray-500 text-sm text-center">or</p>
-                        <button id="upload-trigger" class="mt-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg px-4 py-2">
-                            Choose File
-                        </button>
+                        <button id="upload-trigger" class="btn mt-3">Choose File</button>
                     </div>
                     <input type="file" id="file-input" class="hidden" accept="image/*">
+                    
+                    <!-- Message Input -->
                     <div class="flex gap-4">
-                        <div class="flex-1">
-                            <input type="text" id="message-input" class="w-full bg-[#1E1E1E] text-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type your message...">
-                        </div>
-                        <button id="send-message" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-2">
-                            Send
-                        </button>
+                        <input type="text" id="message-input" class="input-field flex-1" placeholder="Type your message...">
+                        <button id="send-message" class="btn">Send</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Right Sidebar -->
-        <div class="w-80 bg-[#1f2937] border-l border-gray-700">
-            <!-- Current Analysis Section -->
-            <div class="p-4">
-                <!-- Burger Menu -->
-                <div class="scan-type-container mb-4">
-                    <div class="flex items-center space-x-2">
-                        <button id="menu-trigger" class="bg-gray-800 text-white p-2 rounded-lg hover:bg-gray-700 focus:outline-none">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-                        </button>
-                        <span class="text-gray-400">Select Scan Type</span>
-                    </div>
-                    
-                    <!-- Dropdown Content -->
-                    <div id="scan-type-dropdown" class="absolute right-0 w-80 bg-gray-800 border border-gray-700 rounded-lg shadow-lg hidden">
-                        <div class="p-3">
-                            <div class="space-y-2">
-                                <!-- Brain Scans -->
-                                <div class="scan-category">
-                                    <div class="text-gray-400 text-xs px-2 mb-1">Brain & Neurological</div>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="brain_mri">Brain MRI</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="brain_ct">Brain CT</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="spine_mri">Spine MRI</button>
-                                </div>
-                                
-                                <!-- Chest Scans -->
-                                <div class="scan-category">
-                                    <div class="text-gray-400 text-xs px-2 mb-1">Chest & Cardiac</div>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="chest_xray">Chest X-Ray</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="chest_ct">Chest CT</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="cardiac_mri">Cardiac MRI</button>
-                                </div>
-                                
-                                <!-- Abdominal Scans -->
-                                <div class="scan-category">
-                                    <div class="text-gray-400 text-xs px-2 mb-1">Abdominal & Pelvic</div>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="abdominal_ct">Abdominal CT</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="abdominal_mri">Abdominal MRI</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="ultrasound">Ultrasound</button>
-                                </div>
-                                
-                                <!-- Other Scans -->
-                                <div class="scan-category">
-                                    <div class="text-gray-400 text-xs px-2 mb-1">Other Imaging</div>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="xray">General X-Ray</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="mri">General MRI</button>
-                                    <button class="scan-option w-full text-left px-3 py-2 text-white hover:bg-gray-700 rounded" data-value="ct">General CT</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="w-80 bg-[#1f2937] border-l border-gray-700 flex flex-col">
+            <div class="p-4 space-y-4">
+                <!-- Analysis Status -->
+                <div class="bg-[#252526] rounded-lg p-4">
+                    <h3 class="text-lg font-semibold text-white mb-2">Current Analysis</h3>
+                    <div id="analysis-details" class="text-gray-400">No analysis in progress</div>
                 </div>
 
-                <!-- Current Analysis Status -->
-                <div class="space-y-4">
-                    <div class="bg-gray-800 rounded-lg p-4">
-                        <h3 class="text-lg font-semibold text-white mb-2">Current Analysis</h3>
-                        <p class="text-gray-400" id="current-scan-type">Not selected</p>
+                <!-- Image Preview -->
+                <div id="image-preview" class="hidden bg-[#252526] rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-semibold text-white">Image Preview</h3>
+                        <button id="remove-image" class="text-gray-400 hover:text-white">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
                     </div>
-                    
-                    <!-- Image Preview -->
-                    <div id="image-preview" class="hidden">
-                        <div class="bg-gray-800 rounded-lg p-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3 class="text-lg font-semibold text-white">Image Preview</h3>
-                                <button id="remove-image" class="text-gray-400 hover:text-white">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <img id="preview-img" class="w-full h-auto rounded" src="" alt="Preview">
-                            <div id="image-properties" class="mt-2 text-sm text-gray-400">
-                                <p>No image uploaded</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Analysis Progress -->
-                    <div class="bg-gray-800 rounded-lg p-4">
-                        <h3 class="text-lg font-semibold text-white mb-2">Analysis Progress</h3>
-                        <div id="analysis-progress" class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                            <div class="bg-blue-600 h-full w-0 transition-all duration-500"></div>
-                        </div>
+                    <img id="preview-img" class="w-full h-auto rounded" src="" alt="Preview">
+                    <div id="image-properties" class="mt-2 text-sm text-gray-400"></div>
+                </div>
+
+                <!-- Analysis Progress -->
+                <div class="bg-[#252526] rounded-lg p-4">
+                    <h3 class="text-lg font-semibold text-white mb-2">Analysis Progress</h3>
+                    <div id="analysis-progress" class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                        <div class="bg-blue-600 h-full w-0 transition-all duration-500"></div>
                     </div>
                 </div>
             </div>
