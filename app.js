@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Add visible class to all children with animation classes
+                entry.target.querySelectorAll('.rise-up, .feature-text, .feature-card, .highlight-item').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections and elements with animations
+    document.querySelectorAll('.fade-in-section, .feature-section').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Enable smooth scrolling
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Make sure body is scrollable
+    document.body.style.overflowY = 'scroll';
+    
     // Element References
     const menuTrigger = document.getElementById('menu-trigger');
     const scanTypeDropdown = document.getElementById('scan-type-dropdown');
@@ -429,46 +459,84 @@ document.addEventListener('DOMContentLoaded', () => {
         showWelcomeMessage();
     }
 
-    // Scroll Reveal Animation
-    function reveal() {
-        const reveals = document.querySelectorAll('.reveal');
+    const sections = document.querySelectorAll('.fullscreen-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Fix button click handling
+    const ctaButtons = document.querySelectorAll('.glow-button');
+    ctaButtons.forEach(button => {
+        button.style.cursor = 'pointer';
+        button.addEventListener('click', (e) => {
+            const href = button.getAttribute('href');
+            if (href?.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+    
+    // Update active navigation link based on scroll position
+    function updateActiveLink() {
+        const scrollY = window.scrollY;
         
-        reveals.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+            const sectionId = section.getAttribute('id');
             
-            if (elementTop < window.innerHeight - elementVisible) {
-                element.classList.add('active');
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
             }
         });
     }
-
-    // Add reveal class to elements
-    const elements = [
-        ...document.querySelectorAll('.feature-card'),
-        ...document.querySelectorAll('.stat-card'),
-        ...document.querySelectorAll('.about-text'),
-        document.querySelector('.hero-content')
-    ];
     
-    elements.forEach(element => {
-        if (element) {
-            element.classList.add('reveal');
-        }
+    // Smooth scroll to section
+    navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+            const href = link.getAttribute('href');
+            if (href?.startsWith('#')) {
+                e.preventDefault();
+                const targetSection = document.querySelector(href);
+                if (targetSection) {
+                    const headerOffset = 80;
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
     });
     
-    // Initial check for elements in view
-    reveal();
+    // Enable mouse wheel scrolling
+    window.addEventListener('wheel', (e) => {
+        // Default scroll behavior is maintained
+        // This ensures the page responds to mouse wheel events
+    }, { passive: true });
     
-    // Listen for scroll
-    window.addEventListener('scroll', reveal);
-
-    // Parallax effect for background
+    // Listen for scroll events with throttling
+    let ticking = false;
     window.addEventListener('scroll', () => {
-        const background = document.querySelector('.background-animation');
-        if (background) {
-            const scrolled = window.pageYOffset;
-            background.style.transform = `translateY(${scrolled * 0.5}px)`;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateActiveLink();
+                ticking = false;
+            });
+            ticking = true;
         }
     });
+    
+    // Initial check for active link
+    updateActiveLink();
 });
