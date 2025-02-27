@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     const messageInput = document.getElementById('message-input');
     const fileInput = document.getElementById('file-input');
+    const uploadTrigger = document.getElementById('upload-trigger');
+    const dropZone = document.getElementById('drop-zone');
     const sendButton = document.getElementById('send-message');
     const newChatButton = document.getElementById('new-chat');
     const chatHistory = document.getElementById('chat-history');
@@ -14,11 +16,124 @@ document.addEventListener('DOMContentLoaded', () => {
     const imageProperties = document.getElementById('image-properties');
     const analysisProgress = document.getElementById('analysis-progress');
     const removeImageBtn = document.getElementById('remove-image');
-    const uploadTrigger = document.getElementById('upload-trigger');
 
     let currentAnalysis = null;
     let currentImage = null;
     let isMenuOpen = false;
+
+    // File Upload Handlers
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload an image file');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                currentImage = {
+                    file: file,
+                    width: img.width,
+                    height: img.height,
+                    size: formatFileSize(file.size),
+                    type: file.type
+                };
+                
+                // Update preview
+                document.getElementById('preview-img').src = e.target.result;
+                imagePreview.classList.remove('hidden');
+                
+                // Update properties
+                imageProperties.innerHTML = `
+                    <p>Size: ${currentImage.size}</p>
+                    <p>Dimensions: ${currentImage.width}x${currentImage.height}px</p>
+                    <p>Type: ${file.type}</p>
+                `;
+
+                // Hide drop zone
+                dropZone.classList.add('hidden');
+                
+                // Add system message
+                addMessage(`Image uploaded: ${file.name}`, 'system');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Drag and Drop Event Handlers
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+        dropZone.classList.add('border-blue-500', 'bg-blue-500', 'bg-opacity-10');
+    }
+
+    function unhighlight() {
+        dropZone.classList.remove('border-blue-500', 'bg-blue-500', 'bg-opacity-10');
+    }
+
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const file = dt.files[0];
+        handleFile(file);
+    }
+
+    // File Input Handler
+    uploadTrigger.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFile(e.target.files[0]);
+        }
+    });
+
+    // Remove Image Handler
+    removeImageBtn.addEventListener('click', () => {
+        currentImage = null;
+        document.getElementById('preview-img').src = '';
+        imagePreview.classList.add('hidden');
+        dropZone.classList.remove('hidden');
+        imageProperties.innerHTML = '<p>No image uploaded</p>';
+        addMessage('Image removed', 'system');
+    });
+
+    // Chat Message Handler
+    function addMessage(content, type = 'user') {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = type === 'user' ? 'user-message' : 'assistant-message';
+        messageDiv.textContent = content;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
     // Position the dropdown relative to the trigger button
     function positionDropdown() {
@@ -118,20 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.click();
     });
 
-    // File Input Handler
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            handleFileSelection(e.target.files[0]);
-        }
-    });
-
-    // Remove Image Handler
-    removeImageBtn?.addEventListener('click', () => {
-        currentImage = null;
-        imagePreview.classList.add('hidden');
-        imageProperties.innerHTML = '<p>No image uploaded</p>';
-    });
-
     // Send Message Handler
     sendButton.addEventListener('click', () => {
         const message = messageInput.value.trim();
@@ -149,50 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sendButton.click();
         }
     });
-
-    function handleFileSelection(file) {
-        const selectedValue = scanOptions.find(option => option.classList.contains('active'))?.dataset.value;
-        if (!selectedValue) {
-            addMessage('Please select a scan type before uploading an image.', 'system');
-            return;
-        }
-
-        if (!file.type.startsWith('image/')) {
-            addMessage('Please upload a valid image file.', 'system');
-            return;
-        }
-
-        currentImage = file;
-        
-        // Show image preview
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const previewImg = document.getElementById('preview-img');
-            previewImg.src = e.target.result;
-            imagePreview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-
-        // Update image properties
-        updateImageProperties(file);
-        
-        // Add to chat
-        addMessage(`Uploaded ${file.name} for ${scanOptions.find(option => option.classList.contains('active'))?.textContent} analysis`, 'user');
-        
-        // Start analysis
-        startAnalysis(file);
-    }
-
-    function updateImageProperties(file) {
-        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
-        imageProperties.innerHTML = `
-            <div class="space-y-1">
-                <p><span class="text-gray-400">Name:</span> ${file.name}</p>
-                <p><span class="text-gray-400">Size:</span> ${sizeMB} MB</p>
-                <p><span class="text-gray-400">Type:</span> ${file.type}</p>
-            </div>
-        `;
-    }
 
     function updateImageRequirements(scanType) {
         const requirements = {
@@ -327,39 +384,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         return results[scanType] || results['default'];
-    }
-
-    function addMessage(content, sender, file = null) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'max-w-4xl mx-auto py-6';
-        
-        const messageContent = document.createElement('div');
-        messageContent.className = `${sender === 'user' ? 'user-message' : 'assistant-message'} flex items-start gap-4`;
-        
-        // Avatar
-        const avatar = document.createElement('div');
-        avatar.className = `w-8 h-8 rounded-full ${sender === 'assistant' ? 'bg-blue-600' : sender === 'system' ? 'bg-purple-600' : 'bg-green-600'} flex items-center justify-center flex-shrink-0`;
-        avatar.innerHTML = `
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="${sender === 'assistant' ? 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' : 
-                       sender === 'system' ? 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' :
-                       'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'}"/>
-            </svg>
-        `;
-        
-        // Message content
-        const textDiv = document.createElement('div');
-        textDiv.className = 'flex-1';
-        textDiv.innerHTML = content;
-        
-        messageContent.appendChild(avatar);
-        messageContent.appendChild(textDiv);
-        messageDiv.appendChild(messageContent);
-        chatMessages.appendChild(messageDiv);
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     function processUserMessage(message) {

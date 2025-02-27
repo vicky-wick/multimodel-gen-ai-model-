@@ -170,6 +170,7 @@ body {
     width: 100%;
     max-width: 300px;
     margin: 1rem auto;
+    transition: all 0.3s ease;
 }
 
 #preview-img {
@@ -177,6 +178,13 @@ body {
     height: auto;
     border-radius: 0.5rem;
     object-fit: contain;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+#image-properties {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #9CA3AF;
 }
 
 /* Analysis Progress Bar */
@@ -287,16 +295,24 @@ button:active {
     stroke: #60a5fa;
 }
 
-/* Image Upload Area Styles */
+/* Upload Area Styles */
 .upload-area {
     border: 2px dashed #4A5568;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+    min-height: 200px;
 }
 
 .upload-area:hover {
     border-color: #3B82F6;
     background: rgba(59, 130, 246, 0.1);
+}
+
+.upload-area.drag-over {
+    border-color: #3B82F6;
+    background: rgba(59, 130, 246, 0.15);
+    transform: scale(1.01);
 }
 
 /* Notebook Style Code Blocks */
