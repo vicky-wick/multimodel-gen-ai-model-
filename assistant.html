@@ -177,53 +177,83 @@
                 <!-- Messages will be added here -->
             </div>
 
+            <!-- Add this inside the main chat area, before the chat input -->e the main chat area, before the chat input -->
+            <div class="upload-section p-4 border-b border-gray-700">rder-gray-700">
+                <label class="flex items-center space-x-2 cursor-pointer">s-center space-x-2 cursor-pointer">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span class="text-gray-300">Upload Brain Scan</span>
+                    <input type="file" e="file" 
+                           accept="image/*" 
+                           class="hidden" 
+                           id="scan-upload" 
+                           onchange="handleImageUpload(event)"> onchange="handleImageUpload(event)">
+                </label>
+            </div>
+
             <!-- Input Area -->
             <div class="border-t border-gray-700 p-4">
                 <div class="space-y-4">
-                    <!-- Drop Zone -->
-                    <div id="drop-zone" class="upload-area">
-                        <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                        </svg>
-                        <p class="text-gray-400 text-center mb-1">Drag and drop your medical image here</p>
+                    <!-- Drop Zone -->rop Zone -->
+                    <div id="drop-zone" class="upload-area">iv id="drop-zone" class="upload-area">
+                        <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">      <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>                        </svg>
+                        <p class="text-gray-400 text-center mb-1">Drag and drop your medical image here</p>ss="text-gray-400 text-center mb-1">Drag and drop your medical image here</p>
                         <p class="text-gray-500 text-sm text-center">or</p>
-                        <button id="upload-trigger" class="btn mt-3">Choose File</button>
+                        <button id="upload-trigger" class="btn mt-3">Choose File</button>oad-trigger" class="btn mt-3">Choose File</button>
                     </div>
-                    <input type="file" id="file-input" class="hidden" accept="image/*">
+                    <input type="file" id="file-input" class="hidden" accept="image/*">ass="hidden" accept="image/*">
                     
                     <!-- Message Input -->
-                    <div class="flex gap-4">
-                        <input type="text" id="message-input" class="input-field flex-1" placeholder="Type your message...">
-                        <button id="send-message" class="btn">Send</button>
+                    <div class="flex gap-4">iv class="flex gap-4">
+                        <input type="text" id="message-input" class="input-field flex-1" placeholder="Type your message...">                        <input type="text" id="message-input" class="input-field flex-1" placeholder="Type your message...">
+                        <button id="send-message" class="btn">Send</button>nd-message" class="btn">Send</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Right Sidebar -->
-        <div class="w-80 bg-[#1f2937] border-l border-gray-700 flex flex-col">
-            <div class="p-4 space-y-4">
-                <!-- Analysis Status -->
+        <div class="w-80 bg-[#1f2937] border-l border-gray-700 flex flex-col">37] border-l border-gray-700 flex flex-col">
+            <div class="p-4 space-y-4">-y-4">
+                <!-- Analysis Status -->sis Status -->
                 <div class="bg-[#252526] rounded-lg p-4">
-                    <h3 class="text-lg font-semibold text-white mb-2">Current Analysis</h3>
-                    <div id="analysis-details" class="text-gray-400">No analysis in progress</div>
-                </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Current Analysis</h3>h3>
+                    <div id="analysis-details" class="text-gray-400">No analysis in progress</div>iv id="analysis-details" class="text-gray-400">No analysis in progress</div>
+                </div>                </div>
 
                 <!-- Image Preview -->
                 <div id="image-preview" class="hidden bg-[#252526] rounded-lg p-4">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="text-lg font-semibold text-white">Image Preview</h3>
-                        <button id="remove-image" class="text-gray-400 hover:text-white">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <img id="preview-img" class="w-full h-auto rounded" src="" alt="Preview">
-                    <div id="image-properties" class="mt-2 text-sm text-gray-400"></div>
-                </div>
+                        <button id="remove-image" class="text-gray-400 hover:text-white">utton id="remove-image" class="text-gray-400 hover:text-white">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>              </svg>
+                        </button>              </button>
+                    </div>                    </div>
+                    <img id="preview-img" class="w-full h-auto rounded" src="" alt="Preview">ew-img" class="w-full h-auto rounded" src="" alt="Preview">
+                    <div id="image-properties" class="mt-2 text-sm text-gray-400"></div>             <div id="image-properties" class="mt-2 text-sm text-gray-400"></div>
+                </div>         </div>
 
-                <!-- Analysis Progress -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html></body>    <script src="app.js"></script>    </div>        </div>            </div>                </div>                    </div>                        <div class="bg-blue-600 h-full w-0 transition-all duration-500"></div>                    <div id="analysis-progress" class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">                    <h3 class="text-lg font-semibold text-white mb-2">Analysis Progress</h3>                <div class="bg-[#252526] rounded-lg p-4">                <!-- Analysis Progress -->                <!-- Analysis Progress -->
                 <div class="bg-[#252526] rounded-lg p-4">
                     <h3 class="text-lg font-semibold text-white mb-2">Analysis Progress</h3>
                     <div id="analysis-progress" class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">

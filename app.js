@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentAnalysis = null;
     let currentImage = null;
     let isDropdownOpen = false;
+    let messageHistory = [];
 
     // Initialize with welcome message
     function showWelcomeMessage() {
@@ -540,3 +541,146 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial check for active link
     updateActiveLink();
 });
+
+let currentScanType = null;
+let messageHistory = [];
+
+// Initialize chat functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-message');
+    const chatMessages = document.getElementById('chat-messages');
+    const menuTrigger = document.getElementById('menu-trigger');
+    const scanTypeDropdown = document.getElementById('scan-type-dropdown');
+
+    // Handle send message
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        // Add user message to chat
+        addMessageToChat('user', message);
+
+        // Send message to backend
+        fetch('http://localhost:5000/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+                scanType: currentScanType
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            addMessageToChat('assistant', data.response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            addMessageToChat('assistant', 'Sorry, there was an error processing your request.');
+        });
+
+        messageInput.value = '';
+    }
+
+    // Add message to chat UI
+    function addMessageToChat(sender, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${sender}-message`;
+        
+        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <span class="message-text">${content}</span>
+                <span class="message-time">${timestamp}</span>
+            </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        messageHistory.push({
+            sender: sender,
+            content: content,
+            timestamp: timestamp
+        });
+    }
+
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    // Handle scan type selection
+    document.querySelectorAll('.scan-option').forEach(option => {
+        option.addEventListener('click', () => {
+            currentScanType = option.dataset.value;
+            document.getElementById('current-scan-type').textContent = option.querySelector('.scan-option-title').textContent;
+            scanTypeDropdown.classList.add('hidden');
+        });
+    });
+
+    menuTrigger.addEventListener('click', () => {
+        scanTypeDropdown.classList.toggle('hidden');
+    });
+});
+
+let currentImage = null;
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Display image preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.createElement('div');
+        preview.className = 'image-preview';
+        preview.innerHTML = `
+            <img src="${e.target.result}" alt="Scan preview" class="max-w-xs rounded-lg shadow-lg">
+            <button class="analyze-btn">Analyze Image</button>
+        `;
+        
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.appendChild(preview);
+        
+        // Attach analyze button listener
+        preview.querySelector('.analyze-btn').addEventListener('click', () => analyzeImage(file));
+    }
+    reader.readAsDataURL(file);
+    currentImage = file;
+}
+
+async function analyzeImage(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const response = await fetch('http://localhost:5000/analyze', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            addMessageToChat('assistant', `Error: ${data.error}`);
+            return;
+        }
+        
+        const resultMessage = `
+            Analysis Results:
+            - Prediction: ${data.prediction}
+            - Confidence: ${(data.confidence * 100).toFixed(2)}%
+        `;
+        
+        addMessageToChat('assistant', resultMessage);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        addMessageToChat('assistant', 'Sorry, there was an error analyzing the image.');
+    }
+}
